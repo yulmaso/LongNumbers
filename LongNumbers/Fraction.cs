@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscreteMath
+namespace LongNumbers
 {
     class Fraction
     {
@@ -14,7 +14,23 @@ namespace DiscreteMath
         public Fraction()
         {
             num = new Integer();
-            denom = new Natural();
+            denom = new Natural(1);
+        }
+
+        public Fraction(Integer num, Natural denom)
+        {
+            if (denom.ToString() == "0")
+                throw new ArgumentException("Denominator must be non-zero value");
+            this.num = num;
+            this.denom = denom;
+        }
+
+        public Fraction(long num, long denom)
+        {
+            if (denom == 0)
+                throw new ArgumentException("Denominator must be non-zero value");
+            this.num = new Integer(num);
+            this.denom = new Natural(denom);
         }
 
         // Сокращение дроби
@@ -92,7 +108,10 @@ namespace DiscreteMath
         // метод преобразования в строку - для вывода
         public override string ToString()
         {
-            throw new NotImplementedException();
+            if (denom.ToString() != "1")
+                return num.ToString() + " / " + denom.ToString();
+            else
+                return num.ToString();
         }
     }
 }

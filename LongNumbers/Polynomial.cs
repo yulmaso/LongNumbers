@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscreteMath
+namespace LongNumbers
 {
     class Polynomial
     {
@@ -14,7 +14,7 @@ namespace DiscreteMath
         public Polynomial()
         {
             power = 0;
-            coefs = new List<Fraction>();
+            coefs = new List<Fraction> { new Fraction() };
         }
 
         // Сложение многочленов
@@ -140,7 +140,12 @@ namespace DiscreteMath
         // метод преобразования в строку - для вывода
         public override string ToString()
         {
-            throw new NotImplementedException();
+            string result = "";
+            for (int i = power; i >= 0; i--)
+            {
+                result += coefs[i].ToString() + " * x^" + i + " + ";
+            }
+            return result;
         }
     }
 }

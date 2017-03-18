@@ -4,19 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscreteMath
+namespace LongNumbers
 {
     class Integer
     {
         private bool sign; // знак числа, true - "+", false - "-"
-        private int n;     // номер старшей позиции числа
-        private List<ushort> numbers; // массив цифр
+        Natural number; // натуральное число или нуль
 
         public Integer()
         {
             sign = true;
-            n = 0;
-            numbers = new List<ushort>();
+            number = new Natural();
+        }
+
+        public Integer(bool sign, List<ushort> digits)
+        {
+            this.sign = sign;
+            number = new Natural(digits);
+        }
+
+        public Integer (Natural number)
+        {
+            sign = true;
+            this.number = number;
+        }
+
+        public Integer(long number)
+        {
+            if (number < 0)
+                sign = false;
+            else
+                sign = true;
+            this.number = new Natural(Math.Abs(number));
         }
 
         //Абсолютная величина числа, результат - натуральное
@@ -112,7 +131,11 @@ namespace DiscreteMath
         // метод преобразования в строку - для вывода
         public override string ToString()
         {
-            throw new NotImplementedException();
+            string result = "";
+            if (!sign)
+                result += "-";
+            result += number.ToString();
+            return result;
         }
     }
 }

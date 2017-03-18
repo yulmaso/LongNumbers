@@ -1,26 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DiscreteMath
+namespace LongNumbers
 {
     class Natural
     {
-        private ushort n; // номер старшей позиции
-        private List<ushort> numbers; // массив цифр
+        private int n; // номер старшей позиции
+        private List<ushort> digits; // массив цифр
 
         public Natural()
         {
-            n = 0;
-            numbers = new List<ushort>();
+            n = 1;
+            digits = new List<ushort> { 0 };
         }
 
-        public Natural(ushort n, List<ushort> numbers)
+        public Natural(List<ushort> numbers)
         {
-            this.n = n;
-            this.numbers = numbers;
+            this.digits = numbers;
+            n = numbers.Count;
+        }
+
+        public Natural(long number)
+        {
+            if (number < 0)
+                throw new ArgumentException("Argument must be positive");
+            List<ushort> digits = new List<ushort>();
+            while (number != 0)
+            {
+                digits.Add(Convert.ToUInt16(number % 10));
+                number /= 10;
+            }
+            this.digits = digits;
+            this.n = digits.Count;
         }
 
         // Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
@@ -78,9 +89,8 @@ namespace DiscreteMath
             throw new NotImplementedException();
         }
 
-        // ! Требует уточнения
         //Вычисление первой цифры деления большего натурального на меньшее, домноженное на 10^k, где k - номер позиции этой цифры(номер считается с нуля)
-        public static int DIV_NN_Dk(Natural a, Natural b)
+        public static Natural DIV_NN_Dk(Natural a, Natural b)
         {
             throw new NotImplementedException();
         }
@@ -172,7 +182,12 @@ namespace DiscreteMath
         // метод преобразования в строку - для вывода
         public override string ToString()
         {
-            throw new NotImplementedException();
+            string result = "";
+            for (int i = n - 1; i >= 0; i--)
+            {
+                result += digits[i].ToString();
+            }
+            return result;
         }
 
     }
