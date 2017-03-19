@@ -34,10 +34,40 @@ namespace LongNumbers
             this.n = digits.Count;
         }
 
+        // Выполнил Шутемов А.А.
         // Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
         private static int COM_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            int buff = 0, buff1 = 0, counter = 0; //buff,buff1 хранят количество разрядов в числе a и b соответственно
+            string c = Convert.ToString(a);
+            string c1 = Convert.ToString(b);
+
+            buff = c.Length;
+            buff1 = c1.Length;
+
+            if (buff > buff1)                      //проверка на количество разрядов, если у а больше, то return 2
+                return 2;
+
+            else if (buff == buff1)                //если количество разрядов равны, то проверяем по старшим разрядам,
+            {                                      //пока один из разрядов не окажется меньшим/большим, чем такой же разряд
+                for (int i = 0; i < buff; i++)     // второго числа
+                {
+                    if (c[i] == c1[i])
+                    {
+                        counter++;
+                        continue;
+                    }
+                    else if (counter == buff)
+                        return 0;
+                    else if (c[i] > c1[i])
+                        return 2;
+                    else
+                        return 1;
+                }
+            }
+            else
+                return 1;
+            return 0;
         }
 
         // Проверка на ноль: если число не равно нулю, то «да» иначе «нет»
