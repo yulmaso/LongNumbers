@@ -38,35 +38,24 @@ namespace LongNumbers
         // Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
         private static int COM_NN_N(Natural a, Natural b)
         {
-            int buff = 0, buff1 = 0, counter = 0; //buff,buff1 хранят количество разрядов в числе a и b соответственно
-            string c = Convert.ToString(a);
-            string c1 = Convert.ToString(b);
-
-            buff = c.Length;
-            buff1 = c1.Length;
-
-            if (buff > buff1)                      //проверка на количество разрядов, если у а больше, то return 2
+            if (a.n > b.n)                      //проверка на количество разрядов, если у а больше, то return 2
                 return 2;
 
-            else if (buff == buff1)                //если количество разрядов равны, то проверяем по старшим разрядам,
+            else if (a.n == b.n)                //если количество разрядов равны, то проверяем по старшим разрядам,
             {                                      //пока один из разрядов не окажется меньшим/большим, чем такой же разряд
-                for (int i = 0; i < buff; i++)     // второго числа
+                for (int i = a.digits.Count - 1; i >=0; i--)     // второго числа
                 {
-                    if (c[i] == c1[i])
-                    {
-                        counter++;
-                        continue;
-                    }
-                    else if (counter == buff)
-                        return 0;
-                    else if (c[i] > c1[i])
+                    if (a.digits[i] > b.digits[i])
                         return 2;
-                    else
+                    else if (a.digits[i] < b.digits[i])
                         return 1;
+                    else
+                        continue;
                 }
             }
             else
                 return 1;
+
             return 0;
         }
 
@@ -150,27 +139,27 @@ namespace LongNumbers
         }
 
         // должен использовать COM_NN_N
-        public static bool operator > (Natural a, Natural b)
+        public static bool operator >(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return COM_NN_N(a, b) == 2;
         }
 
         // должен использовать COM_NN_N
-        public static bool operator < (Natural a, Natural b)
+        public static bool operator <(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return COM_NN_N(a, b) == 1;
         }
 
         // должен использовать COM_NN_N
         public static bool operator ==(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return COM_NN_N(a, b) == 0;
         }
 
         // должен использовать COM_NN_N
         public static bool operator !=(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return !(a == b);
         }
 
         // должен использовать ADD_NN_N
@@ -222,3 +211,18 @@ namespace LongNumbers
 
     }
 }
+
+
+//public class Complex
+//{
+//    // поля
+//    int x;
+//    List<int> mas;
+
+//    // метод подсчета длины
+//    static double SomeMethod(Complex a)
+//    {
+//        string a = "sjskdj";
+//        var list = a.Split();
+//    }
+//}
