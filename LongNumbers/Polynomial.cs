@@ -8,8 +8,8 @@ namespace LongNumbers
 {
     class Polynomial
     {
-        private int power;
-        private List<Fraction> coefs;
+        private int power; // степень многочлена
+        private List<Fraction> coefs; // массив коэффициентов, 0 индекс - x^0, 1 - x^1 и т.д.
 
         public Polynomial()
         {
@@ -39,7 +39,7 @@ namespace LongNumbers
         public static Polynomial MUL_Pxk_P(Polynomial a, int k)
         {
             throw new NotImplementedException();
-        }
+        }   
 
         // Старший коэффициент многочлена
         public Fraction LED_P_Q(Polynomial a)

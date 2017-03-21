@@ -6,7 +6,7 @@ namespace LongNumbers
     class Natural
     {
         private int n; // номер старшей позиции
-        private List<ushort> digits; // массив цифр
+        private List<ushort> digits; // массив цифр,  0 индекс - самый младший разряд
 
         public Natural()
         {
