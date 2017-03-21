@@ -78,34 +78,36 @@ namespace LongNumbers
         }
 
         //Сложение натуральных чисел
-        public static Natural ADD_NN_N(Natural a, Natural b)
+        //Выполнил Медведев
+        private static Natural ADD_NN_N(Natural a, Natural b)
         {
-            Natural temp;
+            Natural c = new Natural(a);
+            Natural d = new Natural(b);
+
             if (Natural.COM_NN_N(a, b) == 1)
             {
-                temp = a;
-                a = b;
-                b = temp;
+                c = new Natural(b);
+                d = new Natural(a);
             }
             ushort s = 0;//це остаток 
             ushort k = 0;//це сумма разрядов
-            Natural c = new Natural(a);
-            for (int i = 1; i <= b.n; i++)
+
+            for (int i = 0; i < d.n; i++)
             {
-                k = (ushort)(c.digits[c.n - i] + b.digits[b.n - i] + s);//сумма разрядов и остатка от сложения предыдущих 
-                c.digits[c.n - i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
+                k = (ushort)(c.digits[i] + d.digits[i] + s);//сумма разрядов и остатка от сложения предыдущих 
+                c.digits[i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
                 s = (ushort)(k / 10);//тут вычисляем остаток(типо 7+7=14,такой цифры нет,Kappa) 
             }
             if (s != 0)//проверка последнего такого остаточка 
             {
-                if (c.n != b.n)
-                    c.digits[a.n - b.n - 1] = (ushort)(c.digits[c.n - b.n - 1] + s);//если он есть,то мы влетаем и спасаем ситуацию 
+                if (c.n != d.n)
+                    c.digits[d.n] = (ushort)(c.digits[d.n] + s);
                 else
                 {
-                    c.digits.Insert(0, 1);
+                    c.digits.Add(1);//вот тут спасаем 
                     c.n++;
 
-                };//вот тут спасаем 
+                };
             }
             return c;//даем понять,шо все гатова
         }
@@ -117,21 +119,61 @@ namespace LongNumbers
         }
 
         // Умножение натурального числа на цифру
+        // Выполнил Медведев
         private static Natural MUL_ND_N(Natural a, int b)
         {
-            throw new NotImplementedException();
+            Natural c = new Natural(a);
+            if (b == 0)
+            {
+                c.n = 1;
+                c.digits[0] = 0;
+                return c;
+            }
+            else
+            {
+                int s = 0;
+                ushort k = 0;
+                for (int i = 0; i < c.n; i++)
+                {
+                    k = (ushort)(c.digits[i] * b + s);//тут разряд умножаем на цифирку 
+                    c.digits[i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
+                    s = (ushort)(k / 10);//тут вычисляем остаток(типо 7+7=14,такой цифры нет,Kappa) 
+                }
+                if (s != 0)//проверка последнего такого остаточка 
+                {
+                    //если он есть,то мы влетаем и спасаем ситуацию 
+                    c.digits.Add((ushort)(s));//вот тут спасаем 
+                    c.n++;//естественно,увеличиваем,чем больше-тем лучше 
+                }
+                return c;//даем понять,шо все гатова 
+            }
         }
 
         // Умножение натурального числа на 10^k
-        private static Natural MUL_Nk_N(Natural a, int k)
+        // Выполнил Медведев
+        public static Natural MUL_Nk_N(Natural a, int k)
         {
-            throw new NotImplementedException();
+            Natural c = new Natural(a);
+            c.n += k;
+            for (int i = 0; i < k; i++)
+            {
+                c.digits.Insert(0, 0);//типо нулик в конец суем 
+            }
+            //естественно,увеличиваем,чем больше-тем лучше 
+            return c;//возвращаем то,шо забрали
         }
 
-        //Умножение натуральных чисел
+        // Умножение натуральных чисел
+        // Выполнил Медведев
         private static Natural MUL_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            Natural c = new Natural(a);
+            Natural temp = new Natural(0);
+            for (int i = 0; i < b.n; i++)
+            {
+                temp = Natural.ADD_NN_N(temp, Natural.MUL_Nk_N(Natural.MUL_ND_N(c, b.digits[i]), i));//тут многа букаф,но поверьте,це робет 
+            }
+            return temp;
         }
 
         // Вычитание из натурального другого натурального, 
@@ -198,7 +240,7 @@ namespace LongNumbers
         // должен использовать ADD_NN_N
         public static Natural operator +(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return ADD_NN_N(a, b);
         }
 
         // должен использовать SUB_NDN_N
@@ -208,15 +250,15 @@ namespace LongNumbers
         }
 
         // должен использовать MUL_NN_N
-        public static Natural operator * (Natural a, Natural b)
+        public static Natural operator *(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return MUL_NN_N(a, b);
         }
 
         // должен использовать MUL_ND_N
         public static Natural operator *(Natural a, int b)
         {
-            throw new NotImplementedException();
+            return MUL_ND_N(a, b);
         }
 
         // должен использовать DIV_NN_N
