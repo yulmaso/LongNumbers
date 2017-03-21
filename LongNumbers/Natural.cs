@@ -34,6 +34,12 @@ namespace LongNumbers
             this.n = digits.Count;
         }
 
+        public Natural(Natural a)
+        {
+            this.digits = a.digits;
+            this.n = a.n;
+        }
+
         // Выполнил Шутемов А.А.
         // Сравнение натуральных чисел: 2 - если первое больше второго, 0, если равно, 1 иначе.
         private static int COM_NN_N(Natural a, Natural b)
@@ -74,7 +80,34 @@ namespace LongNumbers
         //Сложение натуральных чисел
         public static Natural ADD_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            Natural temp = a;
+            Natural c = new Natural(a);
+            if (Natural.COM_NN_N(a, b) == 1)
+            {
+                temp = a;
+                a = b;
+                b = temp;
+            }
+            ushort s = 0;//це остаток 
+            ushort k = 0;//це сумма разрядов
+            for (int i = 1; i <= b.n; i++)
+            {
+                k = (ushort)(a.digits[a.n - i] + b.digits[b.n - i] + s);//сумма разрядов и остатка от сложения предыдущих 
+                a.digits[a.n - i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
+                s = (ushort)(k / 10);//тут вычисляем остаток(типо 7+7=14,такой цифры нет,Kappa) 
+            }
+            if (s != 0)//проверка последнего такого остаточка 
+            {
+                if (a.n != b.n)
+                    a.digits[a.n - b.n - 1] = (ushort)(a.digits[a.n - b.n - 1] + s);//если он есть,то мы влетаем и спасаем ситуацию 
+                else
+                {
+                    a.digits.Insert(0, 1);
+                    a.n++;
+
+                };//вот тут спасаем 
+            }
+            return a;//даем понять,шо все гатова
         }
 
         //Вычитание из первого большего натурального числа второго меньшего или равного
@@ -211,18 +244,3 @@ namespace LongNumbers
 
     }
 }
-
-
-//public class Complex
-//{
-//    // поля
-//    int x;
-//    List<int> mas;
-
-//    // метод подсчета длины
-//    static double SomeMethod(Complex a)
-//    {
-//        string a = "sjskdj";
-//        var list = a.Split();
-//    }
-//}
