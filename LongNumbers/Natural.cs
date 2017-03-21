@@ -36,7 +36,7 @@ namespace LongNumbers
 
         public Natural(Natural a)
         {
-            this.digits = a.digits;
+            this.digits = new List<ushort>(a.digits);
             this.n = a.n;
         }
 
@@ -80,8 +80,7 @@ namespace LongNumbers
         //Сложение натуральных чисел
         public static Natural ADD_NN_N(Natural a, Natural b)
         {
-            Natural temp = a;
-            Natural c = new Natural(a);
+            Natural temp;
             if (Natural.COM_NN_N(a, b) == 1)
             {
                 temp = a;
@@ -90,24 +89,25 @@ namespace LongNumbers
             }
             ushort s = 0;//це остаток 
             ushort k = 0;//це сумма разрядов
+            Natural c = new Natural(a);
             for (int i = 1; i <= b.n; i++)
             {
-                k = (ushort)(a.digits[a.n - i] + b.digits[b.n - i] + s);//сумма разрядов и остатка от сложения предыдущих 
-                a.digits[a.n - i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
+                k = (ushort)(c.digits[c.n - i] + b.digits[b.n - i] + s);//сумма разрядов и остатка от сложения предыдущих 
+                c.digits[c.n - i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
                 s = (ushort)(k / 10);//тут вычисляем остаток(типо 7+7=14,такой цифры нет,Kappa) 
             }
             if (s != 0)//проверка последнего такого остаточка 
             {
-                if (a.n != b.n)
-                    a.digits[a.n - b.n - 1] = (ushort)(a.digits[a.n - b.n - 1] + s);//если он есть,то мы влетаем и спасаем ситуацию 
+                if (c.n != b.n)
+                    c.digits[a.n - b.n - 1] = (ushort)(c.digits[c.n - b.n - 1] + s);//если он есть,то мы влетаем и спасаем ситуацию 
                 else
                 {
-                    a.digits.Insert(0, 1);
-                    a.n++;
+                    c.digits.Insert(0, 1);
+                    c.n++;
 
                 };//вот тут спасаем 
             }
-            return a;//даем понять,шо все гатова
+            return c;//даем понять,шо все гатова
         }
 
         //Вычитание из первого большего натурального числа второго меньшего или равного
