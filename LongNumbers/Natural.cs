@@ -79,7 +79,7 @@ namespace LongNumbers
 
         //Сложение натуральных чисел
         //Выполнил Медведев
-        private static Natural ADD_NN_N(Natural a, Natural b)
+        public static Natural ADD_NN_N(Natural a, Natural b)
         {
             Natural c = new Natural(a);
             Natural d = new Natural(b);
@@ -91,22 +91,30 @@ namespace LongNumbers
             }
             ushort s = 0;//це остаток 
             ushort k = 0;//це сумма разрядов
-
-            for (int i = 0; i < d.n; i++)
+            int i = 0;
+            for (i = 0; i < d.n; i++)
             {
                 k = (ushort)(c.digits[i] + d.digits[i] + s);//сумма разрядов и остатка от сложения предыдущих 
                 c.digits[i] = (ushort)(k % 10);//тут короче присваевваем наканецта 
                 s = (ushort)(k / 10);//тут вычисляем остаток(типо 7+7=14,такой цифры нет,Kappa) 
             }
-            if (s != 0)//проверка последнего такого остаточка 
+            i = d.n;
+            while (s != 0)//проверка последнего такого остаточка 
             {
-                if (c.n != d.n)
-                    c.digits[d.n] = (ushort)(c.digits[d.n] + s);
-                else
+
+                if (c.n != i)//если разряды не кончились 
+                {
+
+                    k = (ushort)(c.digits[i] + s);
+                    c.digits[i] = (ushort)(k % 10);//если он есть,то мы влетаем и спасаем ситуацию 
+                    s = (ushort)(k / 10);
+                    i++;
+                }
+                else//а тута если кончились 
                 {
                     c.digits.Add(1);//вот тут спасаем 
                     c.n++;
-
+                    s = 0;
                 };
             }
             return c;//даем понять,шо все гатова
