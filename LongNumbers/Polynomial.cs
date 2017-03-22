@@ -17,6 +17,12 @@ namespace LongNumbers
             coefs = new List<Fraction> { new Fraction() };
         }
 
+        public Polynomial(List<Fraction> coefs)
+        {
+            this.coefs = coefs;
+            power = coefs.Count;
+        }
+
         // Сложение многочленов
         public static Polynomial ADD_PP_P(Polynomial a, Polynomial b)
         {
@@ -36,21 +42,31 @@ namespace LongNumbers
         }
 
         // Умножение многочлена на x^k
+        // Выполнил Яковлев
         public static Polynomial MUL_Pxk_P(Polynomial a, int k)
         {
-            throw new NotImplementedException();
-        }   
+            a.power += k;
+            for (int i = 0; i < k; i++)
+            {
+                a.coefs.Insert(i, new Fraction(0, 1));
+            }
+            return a;
+        }
 
         // Старший коэффициент многочлена
+        // Выполнил Яковлев
         public Fraction LED_P_Q(Polynomial a)
         {
-            throw new NotImplementedException();
+            Fraction MainCoef = coefs[power];
+            return MainCoef;
         }
 
         // Степень многочлена
-        public Natural DEG_P_N(Polynomial a)
+        // Выполнил Яковлев
+        public int DEG_P_N(Polynomial a)
         {
-            throw new NotImplementedException();
+            int degree = power;
+            return degree;
         }
 
         // Вынесение из многочлена НОК знаменателей коэффициентов и НОД числителей
@@ -84,7 +100,7 @@ namespace LongNumbers
         }
 
         //Производная многочлена
-        public Polynomial DER_P_P()
+        public void DER_P_P()
         {
             throw new NotImplementedException();
         }
@@ -141,7 +157,7 @@ namespace LongNumbers
         public override string ToString()
         {
             string result = "";
-            for (int i = power; i >= 0; i--)
+            for (int i = power - 1; i >= 0; i--)
             {
                 result += coefs[i].ToString() + " * x^" + i + " + ";
             }
