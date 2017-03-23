@@ -38,10 +38,13 @@ namespace LongNumbers
             this.number = new Natural(Math.Abs(number));
         }
 
-        //Абсолютная величина числа, результат - натуральное
+        //Абсолютная величина числа, результат - натуральное 
+        //Шутемов А.А.
         public static Natural ABS_Z_N(Integer a)
         {
-            throw new NotImplementedException();
+            Natural b;
+            b = a.number;
+            return b;
         }
 
         // Определение положительности числа (2 - положительное, 0 — равное нулю, 1 - отрицательное)
@@ -51,15 +54,29 @@ namespace LongNumbers
         }
 
         // Умножение целого на (-1)
-        public Integer MUL_ZM_Z()
+        // Шутемов А.А.
+        public Integer MUL_ZM_Z(Integer a)
         {
-            throw new NotImplementedException();
+            if (!a.sign)
+            {
+                a.sign = false;
+                return a;
+            }
+            else
+            {
+                a.sign = true;
+                return a;
+            }
         }
 
         // Преобразование натурального в целое
+        // Выполнил Шутемов А.А.
         public static Integer TRANS_N_Z(Natural a)
         {
-            throw new NotImplementedException();
+            Integer temp = new Integer();
+            temp.sign = true;
+            temp.number = a;
+            return temp;
         }
 
         // Преобразование целого неотрицательного в натуральное

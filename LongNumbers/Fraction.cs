@@ -33,6 +33,12 @@ namespace LongNumbers
             this.denom = new Natural(denom);
         }
 
+        public Fraction(long num)
+        {
+            this.num = new Integer(num);
+            this.denom = new Natural(1);
+        }
+
         // Сокращение дроби
         public Fraction REQ_Q_Q()
         {
@@ -97,6 +103,11 @@ namespace LongNumbers
         public static Fraction operator* (Fraction a, Fraction b)
         {
             throw new NotImplementedException();
+        }
+
+        public static Fraction operator* (Fraction a, int b)
+        {
+            return a * new Fraction(b);
         }
 
         // Должен использовать DIV_QQ_Q

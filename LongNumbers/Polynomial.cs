@@ -20,7 +20,7 @@ namespace LongNumbers
         public Polynomial(List<Fraction> coefs)
         {
             this.coefs = coefs;
-            power = coefs.Count;
+            power = coefs.Count - 1;
         }
 
         // Сложение многочленов
@@ -63,7 +63,7 @@ namespace LongNumbers
 
         // Степень многочлена
         // Выполнил Яковлев
-        public int DEG_P_N(Polynomial a)
+        public int DEG_P_N()
         {
             int degree = power;
             return degree;
@@ -102,7 +102,12 @@ namespace LongNumbers
         //Производная многочлена
         public void DER_P_P()
         {
-            throw new NotImplementedException();
+            coefs.RemoveAt(0); // вырезаем нейтральный элемент
+            power -= 1; // минус степень
+            for (int i = 0; i <= power; i++) // умножаем оставшиеся кэфы на степени
+            {
+                coefs[i] *= i + 1;
+            }
         }
 
         // Преобразование многочлена — кратные корни в простые
