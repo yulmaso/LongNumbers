@@ -75,7 +75,7 @@ namespace LongNumbers
         // Добавление 1 к натуральному числу
         public static Natural ADD_1N_N(Natural a)
         {
-            Natural c = new Natural(a); // дублируем введенное число
+            Natural c = new Natural(a); 
             
             for (int i = 0; i < c.n; i++)
             {
@@ -143,7 +143,7 @@ namespace LongNumbers
             Natural c = new Natural(a);
             Natural d = new Natural(b);
 
-            if (Natural.COM_NN_N(b, a) == 2)
+            if (b > a)
             {
                 throw new ArgumentException();
             }
@@ -241,15 +241,15 @@ namespace LongNumbers
         {
             Natural d = new Natural(b);
 
-            d = MUL_ND_N(d, num); // умножение второго числа на цифру
+            d = d * num; // умножение второго числа на цифру
 
-            if (Natural.COM_NN_N(d, a) == 2) // если число, умноженное на цифру оказалось больше первого натурального, то
+            if (d > a) // если число, умноженное на цифру оказалось больше первого натурального, то
             {
                 throw new ArgumentException(); // ошибка
             }
             else
             {
-                d = SUB_NN_N(a, d); // иначе собственно вычитаем
+                d = a - d; // иначе собственно вычитаем
                 return d; // и возвращаем
             }
         }
@@ -314,10 +314,10 @@ namespace LongNumbers
             return ADD_NN_N(a, b);
         }
 
-        // должен использовать SUB_NDN_N
+        // должен использовать SUB_NDN_N (SUB_NN_N ведь, ну)
         public static Natural operator -(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return SUB_NN_N(a, b);
         }
 
         // должен использовать MUL_NN_N
