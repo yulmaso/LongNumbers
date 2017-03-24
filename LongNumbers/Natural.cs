@@ -71,10 +71,26 @@ namespace LongNumbers
             throw new NotImplementedException();
         }
 
-        //Добавление 1 к натуральному числу
-        public Natural ADD_1N_N()
+        // Выполнил Плотников А.А.
+        // Добавление 1 к натуральному числу
+        public static Natural ADD_1N_N(Natural a)
         {
-            throw new NotImplementedException();
+            Natural c = new Natural(a); 
+            
+            for (int i = 0; i < c.n; i++)
+            {
+                if (c.digits[i] < 9)
+                {
+                    c.digits[i] += 1; // собственно прибавление единицы
+                    break;
+                }
+                else
+                {
+                    c.digits[i] = 0; // если разряд переполняется
+                }
+            }
+            return c; // вывод ответа
+
         }
 
         //Сложение натуральных чисел
@@ -120,10 +136,45 @@ namespace LongNumbers
             return c;//даем понять,шо все гатова
         }
 
+        // Выполнил Плотников А.А.
         //Вычитание из первого большего натурального числа второго меньшего или равного
+        // переделать
         public static Natural SUB_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            Natural c = new Natural(a);
+            Natural d = new Natural(b);
+
+            if (b > a)
+            {
+                throw new ArgumentException();
+            }
+
+            for (int i = 0; i < c.n; i++)
+            {
+                if (d.n - i >= 0) // если мы не прошли все разряды меньшего числа
+                {
+                    if (d.digits[i] <= c.digits[i])
+                    {
+                        c.digits[i] -= d.digits[i]; // прямое вычитание
+                    }
+                    if (d.digits[i] > c.digits[i])
+                    {
+                        c.digits[i + 1] -= 1; // занимаем десяток у следующего разряда
+                        c.digits[i] += 10;
+                        c.digits[i] -= d.digits[i];
+                    }
+                    else
+                    {
+                        if (c.digits[i] < 0) // если мы прошли все рязряды меньшего числа, а в большем десяток "занимался" у нуля
+                        {
+                            c.digits[i + 1] -= 1; // выполняем поиск ненулевого разряда и отнимаем у него десяток
+                        }
+                        else break;
+                    }
+                }
+            }
+
+            return c;
         }
 
         // Умножение натурального числа на цифру
@@ -184,11 +235,24 @@ namespace LongNumbers
             return temp;
         }
 
+        // Выполнил Плотников А.А.
         // Вычитание из натурального другого натурального, 
         // умноженного на цифру для случая с неотрицательным результатом
         public static Natural SUB_NDN_N(Natural a, Natural b, int num)
         {
-            throw new NotImplementedException();
+            Natural d = new Natural(b);
+
+            d = d * num; // умножение второго числа на цифру
+
+            if (d > a) // если число, умноженное на цифру оказалось больше первого натурального, то
+            {
+                throw new ArgumentException(); // ошибка
+            }
+            else
+            {
+                d = a - d; // иначе собственно вычитаем
+                return d; // и возвращаем
+            }
         }
 
         //Вычисление первой цифры деления большего натурального на меньшее, домноженное на 10^k, где k - номер позиции этой цифры(номер считается с нуля)
@@ -251,10 +315,10 @@ namespace LongNumbers
             return ADD_NN_N(a, b);
         }
 
-        // должен использовать SUB_NDN_N
+        // должен использовать SUB_NN_N
         public static Natural operator -(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return SUB_NN_N(a, b);
         }
 
         // должен использовать MUL_NN_N
