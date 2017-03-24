@@ -85,10 +85,60 @@ namespace LongNumbers
             throw new NotImplementedException();
         }
 
+        // Выполнил Плотников А.А.
         // Сложение целых чисел
         public static Integer ADD_ZZ_Z(Integer a, Integer b)
         {
-            throw new NotImplementedException();
+
+            if (Integer.POZ_Z_D(b) == 0)
+                return a;
+            else if (Integer.POZ_Z_D(a) == 0)
+                return b;
+            else
+            {
+                Natural c = Integer.ABS_Z_N(a);
+                Natural d = Integer.ABS_Z_N(b);
+
+                if (Integer.POZ_Z_D(a) == 2 && Integer.POZ_Z_D(b) == 2)
+                {
+                    Integer temp = new Integer(c + d);
+                    return temp;
+                }
+                else if (Integer.POZ_Z_D(a) == 2 && Integer.POZ_Z_D(b) == 1)
+                {
+                    if (c > d)
+                    {
+                        Integer temp = new Integer(c - d);
+                        return temp;
+                    }
+                    else
+                    {
+                        Integer temp = new Integer(d - c);
+                        temp.sign = false;
+                        return temp;
+                    }
+                }
+                else if (Integer.POZ_Z_D(a) == 1 && Integer.POZ_Z_D(b) == 2)
+                {
+                    if (c > d)
+                    {
+                        Integer temp = new Integer(c - d);
+                        temp.sign = false;
+                        return temp;
+                    }
+                    else
+                    {
+                        Integer temp = new Integer(d - c);
+                        return temp;
+                    }
+                }
+                else
+                {
+                    Integer temp = new Integer(c + d);
+                    temp.sign = false;
+                    return temp;
+                }
+            }
         }
 
         // Вычитание целых чисел
@@ -115,10 +165,10 @@ namespace LongNumbers
             throw new NotImplementedException();
         }
 
-        // должен использовать ADD_ZZ_Z
+         // должен использовать ADD_ZZ_Z
         public static Integer operator + (Integer a, Integer b)
         {
-            throw new NotImplementedException();
+            return ADD_ZZ_Z(a, b);
         }
 
         // должен использовать SUB_ZZ_Z 
