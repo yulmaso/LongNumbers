@@ -138,6 +138,7 @@ namespace LongNumbers
 
         // Выполнил Плотников А.А.
         //Вычитание из первого большего натурального числа второго меньшего или равного
+        // переделать
         public static Natural SUB_NN_N(Natural a, Natural b)
         {
             Natural c = new Natural(a);
@@ -314,7 +315,7 @@ namespace LongNumbers
             return ADD_NN_N(a, b);
         }
 
-        // должен использовать SUB_NDN_N (SUB_NN_N ведь, ну)
+        // должен использовать SUB_NN_N
         public static Natural operator -(Natural a, Natural b)
         {
             return SUB_NN_N(a, b);
