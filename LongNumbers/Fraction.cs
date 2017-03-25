@@ -75,10 +75,16 @@ namespace LongNumbers
             throw new NotImplementedException();
         }
 
+       // Выполнил Плотников А.А.
         // Умножение дробей
         public static Fraction MUL_QQ_Q(Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            Integer ca = new Integer(a.num); // вытаскиваем из дробей числители и знаменатели
+            Integer cb = new Integer(b.num);
+            Natural da = new Natural(a.denom);
+            Natural db = new Natural(a.denom);
+            Fraction temp = new Fraction(ca * cb, da * db); // перемножаем их соответственно
+            return temp; // возвращаем ответ  
         }
 
         // Деление дробей (делитель отличен от нуля)
@@ -102,7 +108,7 @@ namespace LongNumbers
         // Должен использовать MUL_QQ_Q
         public static Fraction operator* (Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            return Fraction MUL_QQ_Q(a, b);
         }
 
         public static Fraction operator* (Fraction a, int b)
