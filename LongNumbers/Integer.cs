@@ -29,6 +29,12 @@ namespace LongNumbers
             this.number = number;
         }
         
+        public Integer (Integer number)
+        {
+            this.sign = number.sign;
+            this.number = number.number;
+        }
+        
          public Integer(bool sign, Natural number)
         {
             this.sign = sign;
