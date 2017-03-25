@@ -242,7 +242,7 @@ namespace LongNumbers
 
         // Умножение натуральных чисел
         // Выполнил Медведев
-        private static Natural MUL_NN_N(Natural a, Natural b)
+        public static Natural MUL_NN_N(Natural a, Natural b)
         {
             Natural c = new Natural(a);
             Natural temp = new Natural(0);
