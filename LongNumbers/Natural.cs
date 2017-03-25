@@ -25,13 +25,21 @@ namespace LongNumbers
             if (number < 0)
                 throw new ArgumentException("Argument must be positive");
             List<ushort> digits = new List<ushort>();
-            while (number != 0)
+            if (number == 0)
             {
-                digits.Add(Convert.ToUInt16(number % 10));
-                number /= 10;
+                n = 1;
+                digits = new List<ushort> { 0 };
             }
-            this.digits = digits;
-            this.n = digits.Count;
+            else
+            {
+                while (number != 0)
+                {
+                    digits.Add(Convert.ToUInt16(number % 10));
+                    number /= 10;
+                }
+                this.digits = digits;
+                this.n = digits.Count;
+            }
         }
 
         public Natural(Natural a)
@@ -66,9 +74,10 @@ namespace LongNumbers
         }
 
         // Проверка на ноль: если число не равно нулю, то «да» иначе «нет»
+        // Выполнила Новичкова И. 
         public bool NZER_N_B()
         {
-            throw new NotImplementedException();
+            return !(n == 1 && digits[0] == 0);
         }
 
         // Выполнил Плотников А.А.

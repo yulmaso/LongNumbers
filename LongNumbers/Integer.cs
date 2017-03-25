@@ -67,7 +67,7 @@ namespace LongNumbers
 
         // Умножение целого на (-1)
         // Шутемов А.А.
-        public Integer MUL_ZM_Z(Integer a)
+        public static Integer MUL_ZM_Z(Integer a)
         {
             if (!a.sign)
             {
@@ -201,7 +201,7 @@ namespace LongNumbers
                 temp = Integer.MUL_ZM_Z(temp); // ответ = - (|A| * |B|)
             }
             else if ((POZ_Z_D(a) == 1 && POZ_Z_D(b) == 1) || (POZ_Z_D(b) == 2 && POZ_Z_D(a) == 2)) // если А и В - одного знака, то
-                temp = new Integer(Natural.MUL_NN_N(c, d)); // ответ = |A| * |B|
+                temp = new Integer(c * d); // ответ = |A| * |B|
             else if (POZ_Z_D(a) == 0 || POZ_Z_D(b) == 0) // если А или В = 0
                 temp = new Integer(); // ответ = 0
             

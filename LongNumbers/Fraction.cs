@@ -108,7 +108,7 @@ namespace LongNumbers
         // Должен использовать MUL_QQ_Q
         public static Fraction operator* (Fraction a, Fraction b)
         {
-            return Fraction MUL_QQ_Q(a, b);
+            return MUL_QQ_Q(a, b);
         }
 
         public static Fraction operator* (Fraction a, int b)
