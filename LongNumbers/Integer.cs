@@ -150,41 +150,8 @@ namespace LongNumbers
         // Вычитание целых чисел
         public static Integer SUB_ZZ_Z(Integer a, Integer b)
         {
-            Natural c = Integer.ABS_Z_N(a); // заранее вытаскиваем |A| и |B|
-            Natural d = Integer.ABS_Z_N(b);
-            Integer temp = new Integer(); // переменная ответа
-            if (POZ_Z_D(a) == 2 && POZ_Z_D(b) == 2) // если А и В - положительные
-            {
-                if (c < d)
-                {
-                    temp = new Integer(d - c);  
-                    temp = Integer.MUL_ZM_Z(temp); // если |A| < |B| то ответ = - (|B| - |A|)
-                }
-                else temp = new Integer(c - d); // иначе ответ = |A| - |B|
-            }
-            else if (POZ_Z_D(a) == 1 && POZ_Z_D(b) == 1) // если А и В - отрицательные
-            {
-                if (c > d)
-                {
-                    temp = new Integer(c - d);
-                    temp = Integer.MUL_ZM_Z(temp); // если |A| > |B| то ответ = - (|A| - |B|) 
-                }
-                else temp = new Integer(d - c); // иначе ответ = |B| - |A|
-            }
-            else if (POZ_Z_D(a) == 2 && POZ_Z_D(b) == 1) // если А - положительное, В - отрицательное
-            {
-                temp = new Integer(c + d); // то ответ = |A| + |B|
-            }
-            else if (POZ_Z_D(a) == 1 && POZ_Z_D(b) == 2) // если А - отрицательное, В - положительное
-            {
-                temp = new Integer(c + d);
-                temp = Integer.MUL_ZM_Z(temp);// то ответ = - (|A| + |B|)
-            }
-            else if (POZ_Z_D(a) == 0) // если A == 0
-                temp = new Integer(b.sign, d); // то ответ = В
-            else if (POZ_Z_D(b) == 0) // если В == 0
-                temp = new Integer(a.sign, c); // то ответ = А
-
+            Integer temp = new Integer(a + MUL_ZM_Z(b)); // A - B заменяем на A + (-B)
+            
             return temp; // возвращаем ответ
         }
 
