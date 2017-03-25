@@ -188,18 +188,23 @@ namespace LongNumbers
                 }
 
                 if (!k) for (i = d.n; i < c.n; i++) // если мы заняли десяток, а вычитать уже нечего, то ищем разряд, у которого его можно занять
+                {
+                    if (c.digits[i] > 0) // если нашли
                     {
-                        if (c.digits[i] > 0) // если нашли
+                        c.digits[i] -= 1; // то отнимаем
+                        if (i == c.n && c.digits[i] == 0) // если это была единица в самом старшем разряде
                         {
-                            c.digits[i] -= 1; // то отнимаем
-                            if (i == c.n && c.digits[i] == 0) // если это была единица в самом старшем разряде
-                            {
-                                c.n--; // то сокращаем это число на один разряд
-                                c.digits.RemoveAt(c.n); // и удаляем этот самый разряд
-                            }
-                            break;
+                            c.n--; // то сокращаем это число на один разряд
+                            c.digits.RemoveAt(c.n); // и удаляем этот самый разряд
                         }
+                        break;
                     }
+                }
+                if (c.digits[c.n - 1] == 0)
+                {
+                    c.digits.RemoveAt(c.n - 1);
+                    c.n--;
+                }
                 return c;
             }
         }
@@ -282,10 +287,31 @@ namespace LongNumbers
             }
         }
 
-        //Вычисление первой цифры деления большего натурального на меньшее, домноженное на 10^k, где k - номер позиции этой цифры(номер считается с нуля)
+        // Вычисление первой цифры деления большего натурального на меньшее, домноженное на 10^k, где k - номер позиции этой цифры(номер считается с нуля)
+        // Выполнила Новичкова И.
         public static Natural DIV_NN_Dk(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            if (a < b)
+                throw new ArgumentException();
+            if (b == new Natural())
+                throw new ArgumentException();
+            Natural c = new Natural(a);
+            Natural d = new Natural(b);
+
+            int k = 0;
+            while (c - d >=  d * 10)
+            {
+                c.digits.RemoveAt(0);
+                c.n -= 1;
+                k++;
+            }
+            int i = 0;
+            while (c > d)
+            {
+                c -= d;
+                i++;
+            }
+            return MUL_Nk_N(new Natural(i), k);
         }
 
         // Частное от деления большего натурального числа на меньшее или равное натуральное с остатком (делитель отличен от нуля)
@@ -334,6 +360,16 @@ namespace LongNumbers
         public static bool operator !=(Natural a, Natural b)
         {
             return !(a == b);
+        }
+
+        public static bool operator >=(Natural a, Natural b)
+        {
+            return !(a < b);
+        }
+
+        public static bool operator <=(Natural a, Natural b)
+        {
+            return !(a > b);
         }
 
         // должен использовать ADD_NN_N
