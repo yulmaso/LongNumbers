@@ -317,13 +317,30 @@ namespace LongNumbers
         // Частное от деления большего натурального числа на меньшее или равное натуральное с остатком (делитель отличен от нуля)
         private static Natural DIV_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            if (b > a)
+                throw new ArgumentException();
+            if (b == new Natural())
+                throw new ArgumentException();
+            Natural c = new Natural(a);
+            Natural d = new Natural(b);
+            Natural result = new Natural();
+            while (c > d)
+            {
+                Natural t = DIV_NN_Dk(c, d);
+                result += t;
+                c -= t * d;
+            }
+            return result;
         }
 
         //  Остаток от деления большего натурального числа на меньшее или равное натуральное с остатком (делитель отличен от нуля)
         private static Natural MOD_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            if (b > a)
+                throw new ArgumentException();
+            if (b == new Natural())
+                throw new ArgumentException();
+            return a - b * (a / b);
         }
 
         // НОД натуральных чисел
@@ -399,13 +416,13 @@ namespace LongNumbers
         // должен использовать DIV_NN_N
         public static Natural operator /(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return DIV_NN_N(a, b);
         }
 
         // должен использовать MOD_NN_N
         public static Natural operator %(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            return MOD_NN_N(a, b);
         }
 
         // метод преобразования в строку - для вывода
