@@ -344,6 +344,7 @@ namespace LongNumbers
         }
 
         // НОД натуральных чисел
+        // Выполнила Новичкова И.
         public static Natural GCF_NN_N(Natural a, Natural b)
         {
             Natural c = new Natural(a);
@@ -358,9 +359,14 @@ namespace LongNumbers
         }
 
         // НОК натуральных чисел
+        // Выполнила Новичкова И.
         public static Natural LCM_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            Natural gcd = GCF_NN_N(a, b);
+            a /= gcd;
+            b /= gcd;
+
+            return a * b * gcd;
         }
 
         private static void Swap(ref Natural a, ref Natural b)
