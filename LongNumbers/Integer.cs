@@ -60,9 +60,16 @@ namespace LongNumbers
         }
 
         // Определение положительности числа (2 - положительное, 0 — равное нулю, 1 - отрицательное)
+        // Выполнил Шутемов
         public static int POZ_Z_D(Integer a)
         {
-            throw new NotImplementedException();
+            Natural nul = new Natural(0);
+            if (ABS_Z_N(a) > nul && a.sign == true)
+                return 2;
+            else if (ABS_Z_N(a) > nul && a.sign == false)
+                return 1;
+            else
+                return 0;
         }
 
         // Умножение целого на (-1)

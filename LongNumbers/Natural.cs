@@ -28,7 +28,7 @@ namespace LongNumbers
             if (number == 0)
             {
                 n = 1;
-                digits = new List<ushort> { 0 };
+                this.digits = new List<ushort> { 0 };
             }
             else
             {
