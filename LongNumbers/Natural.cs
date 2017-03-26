@@ -306,7 +306,7 @@ namespace LongNumbers
                 k++;
             }
             int i = 0;
-            while (c > d)
+            while (c >= d)
             {
                 c -= d;
                 i++;
@@ -324,7 +324,7 @@ namespace LongNumbers
             Natural c = new Natural(a);
             Natural d = new Natural(b);
             Natural result = new Natural();
-            while (c > d)
+            while (c >= d)
             {
                 Natural t = DIV_NN_Dk(c, d);
                 result += t;
@@ -340,19 +340,34 @@ namespace LongNumbers
                 throw new ArgumentException();
             if (b == new Natural())
                 throw new ArgumentException();
-            return a - b * (a / b);
+            return a - (b * (a / b));
         }
 
         // НОД натуральных чисел
         public static Natural GCF_NN_N(Natural a, Natural b)
         {
-            throw new NotImplementedException();
+            Natural c = new Natural(a);
+            Natural d = new Natural(b);
+            while (c != 0 && d != 0)
+            {
+                if (c < d)
+                    Swap(ref c, ref d);
+                c = c % d;
+            }
+            return c == 0 ? d : c; 
         }
 
         // НОК натуральных чисел
         public static Natural LCM_NN_N(Natural a, Natural b)
         {
             throw new NotImplementedException();
+        }
+
+        private static void Swap(ref Natural a, ref Natural b)
+        {
+            Natural t = a;
+            a = b;
+            b = t;
         }
 
         // должен использовать COM_NN_N
@@ -377,6 +392,16 @@ namespace LongNumbers
         public static bool operator !=(Natural a, Natural b)
         {
             return !(a == b);
+        }
+
+        public static bool operator == (Natural a, int b)
+        {
+            return a == new Natural(b);
+        }
+
+        public static bool operator !=(Natural a, int b)
+        {
+            return a != new Natural(b);
         }
 
         public static bool operator >=(Natural a, Natural b)
