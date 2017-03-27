@@ -49,9 +49,9 @@ namespace LongNumbers
         // Выполнил Шутемов
         public bool INT_Q_B()
         {
-            Integer temp = new Integer(a.denom);
+            Integer temp = new Integer(denom);
             Integer nul = new Integer(0);
-            if (a.num % temp == nul)
+            if (num % temp == nul)
                 return true;
             else
                 return false;
