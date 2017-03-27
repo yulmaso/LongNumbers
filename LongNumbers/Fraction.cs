@@ -46,15 +46,26 @@ namespace LongNumbers
         }
 
         // Проверка на целое, если рациональное число является целым, то «да», иначе «нет»
+        // Выполнил Шутемов
         public bool INT_Q_B()
         {
-            throw new NotImplementedException();
+            Integer temp = new Integer(a.denom);
+            Integer nul = new Integer(0);
+            if (a.num % temp == nul)
+                return true;
+            else
+                return false;
         }
 
         // Преобразование целого в дробное
+        // Выполнил Шутемов
         public static Fraction TRANS_Z_Q(Integer a)
         {
-            throw new NotImplementedException();
+            Fraction temp = new Fraction();
+            Natural one = new Natural(1);
+            temp.num = a;
+            temp.denom = one;
+            return temp;
         }
 
         // Преобразование дробного в целое (если знаменатель равен 1)
