@@ -107,7 +107,7 @@ namespace LongNumbers
             Natural ca = new Natural(Integer.ABS_Z_N(a.num)); // вытаскиваем из дробей числители и знаменатели
             Natural cb = new Natural(Integer.ABS_Z_N(b.num));
             Natural da = new Natural(a.denom);
-            Natural db = new Natural(a.denom);
+            Natural db = new Natural(b.denom);
             bool sign = true; // знак ответа
             if ((Integer.POZ_Z_D(a.num) == 1 && Integer.POZ_Z_D(b.num) == 2) || (Integer.POZ_Z_D(a.num) == 2 && Integer.POZ_Z_D(b.num) == 1))
                 sign = false; // если знаки исходных дробей различны, то меняем знак ответа на минус
