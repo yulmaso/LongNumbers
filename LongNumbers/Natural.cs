@@ -151,22 +151,23 @@ namespace LongNumbers
         {
             Natural c = new Natural(a);
             Natural d = new Natural(b);
+
             if (b > a) // если второе число больше первого, то
-            {
-                throw new ArgumentException(); // ошибка
-            }
+                throw new ArgumentException(); // вылет с ошибкой
+            
             bool flag = false, zero = true; // flag - флажок займа десятка, zero - проверка на нулевое число
-            int i;
+            int i, temp;
             for (i = 0; i < d.n; i++) // вычитаем до конца второго числа
             {
-                if (flag) c.digits[i]--; // если мы занимали, то вычитаем десяток
-                if (c.digits[i] < d.digits[i]) // если цифра первого числа меньше цифры второго в данном разряде, то
+                temp = c.digits[i];
+                if (flag) temp--; // если мы занимали, то вычитаем десяток
+                if (temp < d.digits[i]) // если цифра первого числа меньше цифры второго в данном разряде, то
                 {
-                    c.digits[i] += 10; // прибавляем десяток
+                    temp += 10; // прибавляем десяток
                     flag = true; // включаем флажок
                 }
                 else flag = false; // в ином случае выключаем флажок
-                c.digits[i] -= d.digits[i]; // собственно вычитаем
+                c.digits[i] = (ushort)(temp - d.digits[i]);
                 if (c.digits[i] != 0) zero = false; // если результат вычитания не ноль, то выключаем проверку на ноль
             }
             if (zero && !flag) return c = new Natural(); // если проверка на ноль включена и разряды первого числа все пройдены, то возвращаем ноль
@@ -177,13 +178,14 @@ namespace LongNumbers
                     if (c.digits[i] > 0) // если нашли
                     {
                         c.digits[i] -= 1; // то отнимаем
-                        if (i == c.n && c.digits[i] == 0) // если это была единица в самом старшем разряде
+                        if (i == c.n-- && c.digits[i] == 0) // если это была единица в самом старшем разряде
                         {
                             c.n--; // то сокращаем это число на один разряд
                             c.digits.RemoveAt(c.n); // и удаляем этот самый разряд
                         }
                         break;
                     }
+                    else c.digits[i] = 9;
                 }
             }
             return c;
