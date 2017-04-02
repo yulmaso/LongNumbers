@@ -40,9 +40,24 @@ namespace LongNumbers
         }
 
         // Сокращение дроби
+        // Выполнил Медведев
         public Fraction REQ_Q_Q()
         {
-            throw new NotImplementedException();
+            Natural a = Integer.ABS_Z_N(this.num);//числитель
+            Natural b = this.denom;//знаменатель
+            Natural NOD = Natural.GCF_NN_N(a, b);
+            a = a / NOD;
+            b = b / NOD;
+            bool f;
+            if (Integer.POZ_Z_D(this.num) == 1)
+                f = true;
+            else f = false;
+            this.num = new Integer(a);
+            if (f)
+                this.num.MUL_ZM_Z();
+
+            this.denom = b;
+            return this;
         }
 
         // Проверка на целое, если рациональное число является целым, то «да», иначе «нет»
@@ -75,15 +90,29 @@ namespace LongNumbers
         }
 
         // Сложение дробей
+        // Выполнил Медведев
         public static Fraction ADD_QQ_Q(Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            Natural NOK = Natural.LCM_NN_N(a.denom, b.denom);
+            Integer x = new Integer(NOK / a.denom);//коэфициент для 1 дроби
+            Integer y = new Integer(NOK / b.denom);//для второй
+            Fraction temp = new Fraction(0);
+            temp.num = a.num * x + b.num * y;
+            temp.denom = NOK;
+            return temp;
         }
 
         // Вычитание дробей
+        // Выполнил Медведев
         public static Fraction SUB_QQ_Q(Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            Natural NOK = Natural.LCM_NN_N(a.denom, b.denom);
+            Integer x = new Integer(NOK / a.denom);//коэфициент для 1 дроби
+            Integer y = new Integer(NOK / b.denom);//для второй
+            Fraction temp = new Fraction(0);
+            temp.num = a.num * x - b.num * y;
+            temp.denom = NOK;
+            return temp;
         }
 
         // Выполнил Плотников А.А.
@@ -119,13 +148,13 @@ namespace LongNumbers
         // Должен использовать ADD_QQ_Q
         public static Fraction operator+ (Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            return ADD_QQ_Q(a, b);
         }
 
         // Должен использовать SUB_QQ_Q
         public static Fraction operator- (Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            return SUB_QQ_Q(a, b);
         }
 
         // Должен использовать MUL_QQ_Q
@@ -142,7 +171,7 @@ namespace LongNumbers
         // Должен использовать DIV_QQ_Q
         public static Fraction operator/ (Fraction a, Fraction b)
         {
-            return Fraction DIV_QQ_Q(a, b);
+            return DIV_QQ_Q(a, b);
         }
 
         // метод преобразования в строку - для вывода
