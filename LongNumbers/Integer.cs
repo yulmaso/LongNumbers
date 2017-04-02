@@ -74,17 +74,15 @@ namespace LongNumbers
 
         // Умножение целого на (-1)
         // Шутемов А.А.
-        public static Integer MUL_ZM_Z(Integer a)
+        public void MUL_ZM_Z()
         {
-            if (!a.sign)
+            if (sign)
             {
-                a.sign = false;
-                return a;
+                sign = false;
             }
             else
             {
-                a.sign = true;
-                return a;
+                sign = true;
             }
         }
 
@@ -125,14 +123,14 @@ namespace LongNumbers
             else if (POZ_Z_D(a) == 1 && POZ_Z_D(b) == 1) // если А и В - отрицательные
             {
                 temp = new Integer(c + d); 
-                temp = Integer.MUL_ZM_Z(temp); // то ответ = - (|A| + |B|)
+                temp.MUL_ZM_Z(); // то ответ = - (|A| + |B|)
             }
             else if (POZ_Z_D(a) == 2 && POZ_Z_D(b) == 1) // если А - положительное, В - отрицательное
             {
                 if (c < d)
                 {
                     temp = new Integer(d - c); 
-                    temp = Integer.MUL_ZM_Z(temp); // если |A| < |B| то ответ = - (|B| - |A|) 
+                    temp.MUL_ZM_Z(); // если |A| < |B| то ответ = - (|B| - |A|) 
                 }
                 else temp = new Integer(c - d); //  иначе ответ = |A| - |B|
             }
@@ -141,7 +139,7 @@ namespace LongNumbers
                 if (c > d)
                 {
                     temp = new Integer(c - d); 
-                    temp = Integer.MUL_ZM_Z(temp); // если |A| > |B| то ответ = - (|A| - |B|)
+                    temp.MUL_ZM_Z(); // если |A| > |B| то ответ = - (|A| - |B|)
                 }
                 else temp = new Integer(d - c); //  иначе ответ = |B| - |A|
             }
@@ -157,7 +155,8 @@ namespace LongNumbers
         // Вычитание целых чисел
         public static Integer SUB_ZZ_Z(Integer a, Integer b)
         {
-            Integer temp = new Integer(a + MUL_ZM_Z(b)); // A - B заменяем на A + (-B)
+            b.MUL_ZM_Z();
+            Integer temp = new Integer(a + b); // A - B заменяем на A + (-B)
             
             return temp; // возвращаем ответ
         }
@@ -172,7 +171,7 @@ namespace LongNumbers
             if ((POZ_Z_D(a) == 1 && POZ_Z_D(b) == 2) || (POZ_Z_D(b) == 1 && POZ_Z_D(a) == 2)) // если А и В - разных знаков, то
             {
                 temp = new Integer(c * d);
-                temp = Integer.MUL_ZM_Z(temp); // ответ = - (|A| * |B|)
+                temp.MUL_ZM_Z(); // ответ = - (|A| * |B|)
             }
             else if ((POZ_Z_D(a) == 1 && POZ_Z_D(b) == 1) || (POZ_Z_D(b) == 2 && POZ_Z_D(a) == 2)) // если А и В - одного знака, то
                 temp = new Integer(c * d); // ответ = |A| * |B|
@@ -183,15 +182,24 @@ namespace LongNumbers
         }
 
         // Частное от деления большего целого числа на меньшее или равное натуральное с остатком
+        // Выполнил Медведев
         public static Integer DIV_ZZ_Z(Integer a, Integer b)
         {
-            throw new NotImplementedException();
+            Natural c = Integer.ABS_Z_N(a);
+            Natural d = Integer.ABS_Z_N(b);
+            Integer temp = new Integer(c / d);
+            if (POZ_Z_D(a) != POZ_Z_D(b))
+                temp.MUL_ZM_Z();
+
+            return temp;
         }
 
         // Остаток от деления большего целого числа на меньшее или равное натуральное с остатком
+        // Выполнил Медведев
+        //сомнительно
         public static Integer MOD_ZZ_Z(Integer a, Integer b)
         {
-            throw new NotImplementedException();
+            return a - (a / b) * b;
         }
 
         // должен использовать ADD_ZZ_Z
@@ -215,13 +223,13 @@ namespace LongNumbers
         // должен использовать DIV_ZZ_Z 
         public static Integer operator /(Integer a, Integer b)
         {
-            throw new NotImplementedException();
+            return DIV_ZZ_Z(a, b);
         }
 
         // должен использовать MOD_ZZ_Z
         public static Integer operator %(Integer a, Integer b)
         {
-            throw new NotImplementedException();
+            return MOD_ZZ_Z(a, b);
         }
 
         // метод преобразования в строку - для вывода
