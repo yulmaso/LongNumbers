@@ -202,6 +202,16 @@ namespace LongNumbers
             return a - (a / b) * b;
         }
 
+        public static bool operator == (Integer a, Integer b)
+        {
+            return (a.number == b.number) && (a.sign == b.sign);
+        }
+
+        public static bool operator != (Integer a, Integer b)
+        {
+            return !(a == b);
+        }
+
         // должен использовать ADD_ZZ_Z
         public static Integer operator + (Integer a, Integer b)
         {

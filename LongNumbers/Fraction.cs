@@ -86,7 +86,17 @@ namespace LongNumbers
         // Преобразование дробного в целое (если знаменатель равен 1)
         public static Integer TRANS_Q_Z(Fraction a)
         {
-            throw new NotImplementedException();
+            Natural nul = new Natural(1);
+            Integer nTemp = new Integer(a.num);
+            Integer dTemp = new Integer(a.denom);
+            if (a.denom == nul && (nTemp / dTemp == a.num))
+            {
+                Integer temp = new Integer(a.num);
+                return temp;
+            }
+            else
+                throw new ArgumentException("You can not convert to an integer, the denominator is not 1");
+
         }
 
         // Сложение дробей
