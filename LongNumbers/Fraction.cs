@@ -86,7 +86,7 @@ namespace LongNumbers
             throw new NotImplementedException();
         }
 
-       // Выполнил Плотников А.А.
+        // Выполнил Плотников А.А.
         // Умножение дробей
         public static Fraction MUL_QQ_Q(Fraction a, Fraction b)
         {
@@ -98,10 +98,22 @@ namespace LongNumbers
             return temp; // возвращаем ответ  
         }
 
+        // Выполнил Плотников А.А.
         // Деление дробей (делитель отличен от нуля)
         public static Fraction DIV_QQ_Q(Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            if (b.num == new Integer())
+                throw new ArgumentException();
+            Natural ca = new Natural(Integer.ABS_Z_N(a.num)); // вытаскиваем из дробей числители и знаменатели
+            Natural cb = new Natural(Integer.ABS_Z_N(b.num));
+            Natural da = new Natural(a.denom);
+            Natural db = new Natural(b.denom);
+            bool sign = true; // знак ответа
+            if ((Integer.POZ_Z_D(a.num) == 1 && Integer.POZ_Z_D(b.num) == 2) || (Integer.POZ_Z_D(a.num) == 2 && Integer.POZ_Z_D(b.num) == 1))
+                sign = false; // если знаки исходных дробей различны, то меняем знак ответа на минус
+            Integer num = new Integer(sign, ca * db); //вычисляем числитель
+            Fraction temp = new Fraction(num, cb * da); // вычисляем знаменатель
+            return temp; // возвращаем ответ
         }
 
         // Должен использовать ADD_QQ_Q
@@ -130,7 +142,7 @@ namespace LongNumbers
         // Должен использовать DIV_QQ_Q
         public static Fraction operator/ (Fraction a, Fraction b)
         {
-            throw new NotImplementedException();
+            return Fraction DIV_QQ_Q(a, b);
         }
 
         // метод преобразования в строку - для вывода
